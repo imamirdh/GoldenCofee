@@ -1,0 +1,7 @@
+.Headerbox{
+    background-image: url("./../../../public/images/headerBgDesktop.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
