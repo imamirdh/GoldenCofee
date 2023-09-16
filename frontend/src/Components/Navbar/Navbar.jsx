@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   HiOutlineShoppingCart,
   HiOutlineMoon,
@@ -16,8 +16,12 @@ import App from "../../App";
 function Navbar({ home }) {
   const Appcontext = useContext(AppContext);
   const userInfos = Appcontext.userInfos;
+  const [menus, setMenus] = useState([]);
   useEffect(() => {
-    console.log(userInfos);
+    fetch(`http://localhost:4000/v1/menus`)
+      .then((res) => res.json())
+      .then((result) => setMenus(result));
+      console.log(menus)
   }, []);
   return (
     <nav
@@ -37,47 +41,31 @@ function Navbar({ home }) {
               صفحه اصلی
             </a>
           </li>
-          <li className="relative group">
-            <a href="" className="menulink">
-              فروشگاه
-            </a>
-            <ul
-              className="transition-all invisible opacity-0 group-hover:visible group-hover:opacity-100 font-Dana space-y-4 tracking-normal  absolute top-full w-52 border-t-4 rounded-2xl p-6 bg-white border-orange-300 shadow-shadow-normal text-zinc-700 dark:bg-zinc-700 dark:text-white text-base
-                         child:leading-6 child:h-6 child:inline-block child:transition-colors child-hover:text-orange-300"
-            >
-              <a href="#">قهوه ویژه</a>
+          {menus.map((menu) => (
+            <li className="relative group">
+              <a href="" className="menulink">
+                {menu.title}
+              </a>
+             
+                {/* <ul
+                  className="transition-all invisible opacity-0 group-hover:visible group-hover:opacity-100 font-Dana space-y-4 tracking-normal  absolute top-full w-52 border-t-4 rounded-2xl p-6 bg-white border-orange-300 shadow-shadow-normal text-zinc-700 dark:bg-zinc-700 dark:text-white text-base
+                           child:leading-6 child:h-6 child:inline-block child:transition-colors child-hover:text-orange-300"
+                >
+                  <a href="#">قهوه ویژه</a>
 
-              <a href="#">ویژه در سطح جهانی</a>
+                  <a href="#">ویژه در سطح جهانی</a>
 
-              <a href="#">قهوه درجه یک</a>
+                  <a href="#">قهوه درجه یک</a>
 
-              <a href="#">ترکیبات تجاری</a>
+                  <a href="#">ترکیبات تجاری</a>
 
-              <a href="#">کپسول قهوه</a>
+                  <a href="#">کپسول قهوه</a>
 
-              <a href="#">قهوه زینو برزیلی</a>
-            </ul>
-          </li>
-          <li>
-            <a href="" className="menulink">
-              دیکشنری
-            </a>
-          </li>
-          <li>
-            <a href="" className="menulink">
-              بلاگ
-            </a>
-          </li>
-          <li>
-            <a href="" className="menulink">
-              درباره ما
-            </a>
-          </li>
-          <li>
-            <a href="" className="menulink">
-              تماس با ما
-            </a>
-          </li>
+                  <a href="#">قهوه زینو برزیلی</a>
+                </ul> */}
+             
+            </li>
+          ))}
         </ul>
       </div>
       <div className="navleft w-1/2 flex items-center justify-end gap-5">

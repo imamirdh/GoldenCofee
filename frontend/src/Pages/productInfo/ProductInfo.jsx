@@ -14,6 +14,8 @@ export default function ProductInfo() {
   const [productDetails, setProductDetails] = useState({});
   const [categoryTitle, setCategoryTitle] = useState("");
   const [productPrice, setProductPrice] = useState("");
+  const [ariaBox, setAriafiBox] = useState("moarefi");
+  const [articleThisProduct, setArticleThisProduct] = useState({});
   useEffect(() => {
     const localStorageData = JSON.parse(localStorage.getItem("user"));
 
@@ -29,7 +31,20 @@ export default function ProductInfo() {
       .then((productinfo) => {
         setProductDetails(productinfo);
         setCategoryTitle(productinfo.categoryID.title);
-        setProductPrice(productinfo.price)
+        setProductPrice(productinfo.price);
+        console.log(productinfo);
+      });
+    fetch(`http://localhost:4000/v1/articles/${productName}`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${
+          localStorageData === null ? null : localStorageData
+        }`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((productinfo) => {
         console.log(productinfo);
       });
   }, []);
@@ -38,13 +53,14 @@ export default function ProductInfo() {
     <>
       <Navbar />
       <MobileNavbar />
-      <div className="main">
+      <div className="main ">
         <div className="topmain">
+          {/* product informaition header */}
           <div className="row h-[90vh] flex items-center">
             <div className="w-1/2 h-full">
               <div className="cover-product w-full h-full flex flex-col items-center justify-evenly">
                 <img
-                  src="./../images/products/p1.png"
+                  src={`http://localhost:4000/courses/covers/${productDetails.cover}`}
                   alt="cover"
                   className="w-1/2 h-1/2 border-s border-b border-zinc-500 rounded-2xl"
                 />
@@ -89,7 +105,9 @@ export default function ProductInfo() {
                     </div>
                   </div>
                 </div>
-                <p className="dark:text-slate-200">{productDetails.description}</p>
+                <p className="dark:text-slate-200">
+                  {productDetails.description}
+                </p>
                 <div className="space-y-5">
                   <div className="flex items-center gap-5">
                     <div className="w-1/2 border-2 border-dashed border-teal-600 p-2 rounded-2xl text-sm text-zinc-500">
@@ -137,6 +155,53 @@ export default function ProductInfo() {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+          <div className="row ">
+            <div className=" bg-zinc-200">
+              <div className="font-Dana w-full flex  container">
+                <ul className="font-DanaMedium flex items-center justify-start gap-5 w-3/4 h-16 px-5 py-1 transition-all duration-500">
+                  <li
+                    className={`${
+                      ariaBox === "moarefi" && "bg-zinc-600 text-orange-200"
+                    } h-full flex items-center rounded-lg px-2`}
+                    onClick={() => setAriafiBox("moarefi")}
+                  >
+                    معرفی محصول
+                  </li>
+                  <li
+                    className={`${
+                      ariaBox === "learning" && "bg-zinc-600 text-orange-200"
+                    } h-full flex items-center rounded-lg px-2`}
+                    onClick={() => setAriafiBox("learning")}
+                  >
+                    آموزش رایگان
+                  </li>
+                  <li
+                    className={`${
+                      ariaBox === "comments" && "bg-zinc-600 text-orange-200"
+                    } h-full flex items-center rounded-lg px-2`}
+                    onClick={() => setAriafiBox("comments")}
+                  >
+                    نظرات کاربران
+                  </li>
+                </ul>
+                <div className="border-s-2 border-zinc-700 h-16 w-1/4 px-5">
+                  <p>محصولات دیگر</p>
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center">
+              {/* product informaion articles and comments */}
+              <div className="w-3/4">
+                <div>
+                  {ariaBox === "moarefi" && <div>moarefi</div>}
+                  {ariaBox === "learning" && <div>learn</div>}
+                  {ariaBox === "comments" && <div>comment</div>}
+                </div>
+              </div>
+              {/* product information sidbar and related product*/}
+              <div className="w-1/4">s</div>
             </div>
           </div>
         </div>
