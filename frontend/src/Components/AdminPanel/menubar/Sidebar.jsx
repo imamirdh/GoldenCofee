@@ -81,16 +81,16 @@ function Sidebar({ exit }) {
       />
       <div class="my-4 bg-gray-600 h-[1px]"></div>
       <button
-        onClick={() => contextadata.setIsDarkTheme((prev) => !prev)}
+        onClick={() => contextadata.setIsDark((prev) => !prev)}
         class="p-2.5 mt-3 w-full flex items-center rounded-md rounded-l-full px-4 duration-300 cursor-pointer hover:bg-zinc-600 "
       >
-        {contextadata.isDarkTheme ? (
+        {contextadata.isDark ? (
           <BiSun className="text-xl" />
         ) : (
           <BiMoon className="text-xl" />
         )}
         <span class="text-[15px] mr-2  font-bold">
-          {contextadata.isDarkTheme ? "تم روشن" : "تم تیره"}
+          {contextadata.isDark ? "تم روشن" : "تم تیره"}
         </span>
       </button>
       <button

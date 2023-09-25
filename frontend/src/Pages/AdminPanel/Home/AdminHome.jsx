@@ -1,10 +1,29 @@
-import React from "react";
-import Feature from "./../../../Components/AdminPanel/Home/CountBox"
+import React, { useEffect, useState } from "react";
+import Feature from "./../../../Components/AdminPanel/Home/CountBox";
 import { BiShoppingBag } from "react-icons/bi";
 import { FiUsers } from "react-icons/fi";
-import Chart from "./../../../Components/AdminPanel/Home/Chart"
+import Chart from "./../../../Components/AdminPanel/Home/Chart";
 import Table from "./../../../Components/AdminPanel/Table/Table";
 function Home(props) {
+  const [adminHomeUser, setAdminHomeUser] = useState("");
+  const [adminHomeProducts, setAdminHomeProducts] = useState("");
+  const [lastUserToRegister, setLastUserToRegister] = useState([]);
+  useEffect(() => {
+    const localStorageData = JSON.parse(localStorage.getItem("user"));
+    fetch(`http://localhost:4000/v1/infos/p-admin`, {
+      headers: {
+        Authorization: `Bearer ${localStorageData}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        setAdminHomeUser(result.infos[0].count);
+        setAdminHomeProducts(result.infos[1].count);
+        setLastUserToRegister(result.lastUsers);
+      });
+  }, []);
+
   return (
     <div className="px-2 h-full">
       {/* count info */}
@@ -12,12 +31,12 @@ function Home(props) {
         <Feature
           title="تعداد محصولات سایت"
           icon={<BiShoppingBag />}
-          countproducts="20"
+          countproducts={adminHomeProducts}
         />
         <Feature
           title="تعداد کاربران سایت"
           icon={<FiUsers />}
-          countproducts="36"
+          countproducts={adminHomeUser}
         />
       </div>
       {/* sell chart */}
@@ -35,34 +54,15 @@ function Home(props) {
         <Table
           th={["نام", "نام کاربری", "ایمیل", "شماره تلفن", "تاریخ ثبت نام"]}
         >
-          <tr>
-            <td>امیررضا</td>
-            <td>imamirdh</td>
-            <td>imamirdh@gmail.com</td>
-            <td>091212345678</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>امیررضا</td>
-            <td>imamirdh</td>
-            <td>imamirdh@gmail.com</td>
-            <td>091212345678</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>امیررضا</td>
-            <td>imamirdh</td>
-            <td>imamirdh@gmail.com</td>
-            <td>091212345678</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>امیررضا</td>
-            <td>imamirdh</td>
-            <td>imamirdh@gmail.com</td>
-            <td>091212345678</td>
-            <td></td>
-          </tr>
+          {lastUserToRegister.map((lastuser) => (
+            <tr>
+              <td>{lastuser.name}</td>
+              <td>{lastuser.username}</td>
+              <td>{lastuser.email}</td>
+              <td>{lastuser.phone}</td>
+              <td>{lastuser.createdAt.slice(0,10)}</td>
+            </tr>
+          ))}
         </Table>
       </div>
     </div>

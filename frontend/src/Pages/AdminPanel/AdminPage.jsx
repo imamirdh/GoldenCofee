@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Sidebar from "../../Components/AdminPanel/menubar/Sidebar";
 import Navbar from "../../Components/AdminPanel/menubar/Navbar";
 import MobileMenuSidebar from "../../Components/AdminPanel/menubar/MobileMenuSidebar";
@@ -6,6 +6,7 @@ import AppContext from "../../Context/AppContext";
 import { Outlet } from "react-router-dom";
 export default function AdminPage() {
   const contextData = useContext(AppContext);
+  
   return (
     <div className={contextData.isDark ? "App dark" : "App"}>
       {/* {isMobileSidebar && <MobileMenuSidebar />} */}
