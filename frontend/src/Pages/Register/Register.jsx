@@ -9,7 +9,7 @@ import {
   maxValidator,
   emailValidator,
 } from "./../../Validations/rules";
-import { useForm } from "../../Components/Hooks/useForm";
+import { useForm } from "../../Hooks/useForm";
 import Button from "../../Components/Input/Button";
 import AppContext from "../../Context/AppContext";
 import { toast } from "react-toastify";
