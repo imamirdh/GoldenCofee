@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @layer base {
+  
   @font-face {
     font-family: "Dana";
     src: local("Dana"),
@@ -66,4 +67,10 @@
   .socialbtnfooter {
     background: linear-gradient(to left, #fdba74, #fed7aa);
   }
+  h2#swal2-title {
+    font-family: 'Dana' !important;
+}
+button.swal2-styled {
+  font-family: 'Dana' !important;
+}
 }

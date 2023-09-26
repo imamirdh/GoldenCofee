@@ -13,6 +13,7 @@ import ShopCartMenu from "../ShopCartMenu/ShopCartMenu";
 import AppContext from "../../Context/AppContext";
 import { Link } from "react-router-dom";
 import App from "../../App";
+import Button from "../Input/Button";
 function Navbar({ home }) {
   const Appcontext = useContext(AppContext);
   const userInfos = Appcontext.userInfos;
@@ -107,10 +108,10 @@ function Navbar({ home }) {
                 child:ps-1
                 child:transition-all"
                 >
-                  <button className="flex items-center">
+                  <Button to="/AdminPanel" className="flex items-center">
                     <HiCog className="me-1 w-6 h-6" />
                     <span>پنل کاربر</span>
-                  </button>
+                  </Button>
                   <button className="flex items-center">
                     <HiOutlineChat className="me-1 w-6 h-6" />
                     <span>ارتباط با پشتیبانی</span>

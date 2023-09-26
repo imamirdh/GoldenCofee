@@ -73,7 +73,8 @@ function InputForm(props) {
       </div>
     ) : (
       <textarea placeholder={props.lable}
-      className={`bg-zinc-50 rounded-md p-2 border border-zinc-700 focus:border-2 transition-all dark:bg-zinc-600 dark:text-teal-300  outline-none ${props.className}`} dir="ltr"></textarea>
+      className={`bg-zinc-50 rounded-md p-2 border border-zinc-700 focus:border-2 transition-all dark:bg-zinc-600 dark:text-teal-300  outline-none ${props.className}`} value={value}
+      onChange={onChangeHandler} dir="ltr"></textarea>
     );
   return <>{element}</>;
 }
