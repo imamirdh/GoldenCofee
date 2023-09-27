@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import {  
+import React, { useContext, useEffect, useState } from "react";
+import {
   BiSearch,
   BiHomeAlt2,
   BiShoppingBag,
@@ -7,7 +7,7 @@ import {
   BiExit,
 } from "react-icons/bi";
 import { BsSun, BsClock, BsCalendarDate } from "react-icons/bs";
-import Clock from 'clock-react'
+import Clock from "clock-react";
 
 import { MdMenuOpen } from "react-icons/md";
 import { FiUsers, FiShoppingCart } from "react-icons/fi";
@@ -17,16 +17,31 @@ import ReactDOM from "react-dom";
 function MobileMenuSidebar() {
   const contextdata = useContext(AppContext);
   let today = new Date().toLocaleDateString("fa-IR");
-  return ReactDOM.createPortal(
+
+  const [menubox, setMenoBox] = useState(false);
+
+  useEffect(() => {
+    if (contextdata.sidebarMobile) {
+      setMenoBox(true);
+    }
+  }, []);
+
+  return (
     <div
       className={
         contextdata.isDark
-          ? "dark w-screen h-screen fixed top-0 bg-opacity-50 bg-black"
-          : "w-screen h-screen fixed top-0 bg-opacity-50 bg-black"
+          ? "dark w-screen h-screen fixed top-0 bg-opacity-50 bg-black z-50"
+          : "w-screen h-screen fixed top-0 bg-opacity-50 bg-black z-50"
       }
       dir="rtl"
     >
-      <div class="MobileMenuSidebar font-Dana h-screen p-2 w-2/3 fixed right-0 overflow-y-auto text-center bg-slate-200 text-matisse-950 dark:bg-slate-800 dark:text-violet-300 rounded-bl-[70px]">
+      <div
+        className={
+          menubox
+            ? " bg-white w-3/4 h-screen p-4 opacity-1 transition-all duration-500 opacity-1 dark:bg-zinc-700 "
+            : "bg-white w-3/4 h-screen p-4 opacity-0 translate-x-[100%] transition-all duration-500 dark:bg-zinc-700 "
+        }
+      >
         <div class="text-matisse-950 dark:text-white ">
           <div class="p-2.5 mt-1 flex items-center justify-between">
             <div className="flex items-center">
@@ -35,7 +50,12 @@ function MobileMenuSidebar() {
             </div>
             <button
               className="p-2 text-xl border-2 border-slate-700 rounded-full hover:text-violet-400 hover:border-violet-500 hover:translate-x-2 duration-500 transition-all"
-              onClick={() => contextdata.setIsMobileSidebar((prev) => !prev)}
+              onClick={() => {
+                setMenoBox(false);
+                setTimeout(() => {
+                  contextdata.setSidebarMobile(false);
+                }, 300);
+              }}
             >
               <MdMenuOpen />
             </button>
@@ -97,8 +117,7 @@ function MobileMenuSidebar() {
           <span class="text-[15px] mr-2  font-bold">خروج</span>
         </button>
       </div>
-    </div>,
-    document.getElementById("modal")
+    </div>
   );
 }
 

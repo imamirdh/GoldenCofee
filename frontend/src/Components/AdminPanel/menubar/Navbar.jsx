@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import AppContext from "../../../Context/AppContext";
 import { BsSun, BsClock, BsCalendarDate } from "react-icons/bs";
 import { BiMoon } from "react-icons/bi";
@@ -8,7 +8,7 @@ import Clock from "clock-react";
 function Navbar({ name = "امیررضا", task = "مدیر", img = "./img/yolme.jpg" }) {
   const contextdata = useContext(AppContext);
   let today = new Date().toLocaleDateString("fa-IR");
-
+const [sidebarMobile , setSidebarMobile]=useState(false)
   console.log(contextdata.userInfos);
   return (
     <div className="navbar  flex justify-between items-center h-[10%] bg-zinc-100 text-zinc-700 font font-Dana border-b border-zinc-800 dark:border-orange-300 dark:bg-zinc-800 dark:text-gray-300">
@@ -46,12 +46,12 @@ function Navbar({ name = "امیررضا", task = "مدیر", img = "./img/yolme
         >
           {contextdata.isDark ? <BsSun /> : <BiMoon />}
         </button>
-        {/* <button
+        <button
           className="lg:hidden me-5 p-2 text-xl border-2 rounded-full hover:text-violet-400 hover:border-violet-500 hover:translate-x-2 duration-500 transition-all"
-          onClick={() => contextdata.setIsMobileSidebar((prev) => !prev)}
+          onClick={() => contextdata.setSidebarMobile((prev) => !prev)}
         >
           <MdMenuOpen />
-        </button> */}
+        </button>
       </div>
     </div>
   );

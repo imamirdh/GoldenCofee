@@ -4,12 +4,13 @@ import Navbar from "../../Components/AdminPanel/menubar/Navbar";
 import MobileMenuSidebar from "../../Components/AdminPanel/menubar/MobileMenuSidebar";
 import AppContext from "../../Context/AppContext";
 import { Outlet } from "react-router-dom";
+
 export default function AdminPage() {
   const contextData = useContext(AppContext);
   
   return (
     <div className={contextData.isDark ? "App dark" : "App"}>
-      {/* {isMobileSidebar && <MobileMenuSidebar />} */}
+       {contextData.sidebarMobile && <MobileMenuSidebar />}
       <div dir="rtl">
         <div className="font-Vazir flex h-screen bg-slate-50 dark:bg-zinc-800">
           <Sidebar />

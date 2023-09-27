@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   maxValidator,
   minValidator,
@@ -8,7 +8,7 @@ import Button from "./../../../Components/AdminPanel/Input/Button";
 import InputForm from "./../../../Components/AdminPanel/Input/Input";
 import Table from "./../../../Components/AdminPanel/Table/Table";
 import { useForm } from "../../../Hooks/useForm";
-
+import Swal from "sweetalert2";
 import { MdOutlineAddShoppingCart, MdViewList } from "react-icons/md";
 import {
   HiOutlineTrash,
@@ -16,32 +16,101 @@ import {
   HiOutlineUserAdd,
   HiOutlineLockClosed,
 } from "react-icons/hi";
+import AppContext from "../../../Context/AppContext";
 function Menus(props) {
-  const [formstate, onInputHandler] = useForm(
+  const [menus, setMenus] = useState([]);
+  const [menuParent, setMenuParent] = useState("-1");
+  const appcontext = useContext(AppContext);
+  const [formState, onInputHandler] = useForm(
     {
-      name: {
+      title: {
         value: "",
         isValid: false,
       },
-      description: {
-        value: "",
-        isValid: false,
-      },
-      shortName: {
-        value: "",
-        isValid: false,
-      },
-      price: {
-        value: "",
-        isValid: false,
-      },
-      support: {
+      href: {
         value: "",
         isValid: false,
       },
     },
     false
   );
+
+  useEffect(() => {
+    getAllMenus();
+  }, []);
+
+  function getAllMenus() {
+    fetch("http://localhost:4000/v1/menus/all")
+      .then((res) => res.json())
+      .then((allMenus) => {
+        console.log(allMenus);
+        setMenus(allMenus);
+      });
+  }
+
+  const removeMenu = (menuID) => {
+    const localStorageData = JSON.parse(localStorage.getItem("user"));
+    Swal.fire({
+      title: "آیا از حذف منو اطمینان داری؟",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonText: "خیر",
+      confirmButtonText: "بله",
+      confirmButtonColor: "#f43f5e",
+      color: appcontext.isDark ? "#fed7aa" : "",
+      background: appcontext.isDark ? "#3f3f46" : "",
+    }).then((result) => {
+      if (result) {
+        fetch(`http://localhost:4000/v1/menus/${menuID}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${localStorageData}`,
+          },
+        }).then((res) => {
+          if (res.ok) {
+            Swal.fire({
+              title: "منو  با موفقیت حذف شد",
+              icon: "success",
+              confirmButtonColor: "#10b981",
+            }).then(() => {
+              getAllMenus();
+            });
+          }
+        });
+      }
+    });
+  };
+
+  const createMenu = (event) => {
+    event.preventDefault();
+    const localStorageData = JSON.parse(localStorage.getItem("user"));
+
+    const newMenuInfo = {
+      title: formState.inputs.title.value,
+      href: formState.inputs.href.value,
+      parent: menuParent === "-1" ? undefined : menuParent,
+    };
+
+    fetch(`http://localhost:4000/v1/menus`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorageData}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newMenuInfo),
+    }).then((res) => {
+      console.log(res);
+      if (res.ok) {
+        Swal.fire({
+          title: "منو  با موفقیت منتشر شد",
+          icon: "success",
+          confirmButtonColor: "#10b981",
+        }).then((result) => {
+          getAllMenus();
+        });
+      }
+    });
+  };
   return (
     <>
       <div className="p-2">
@@ -60,7 +129,7 @@ function Menus(props) {
             />
             <InputForm
               element="input"
-              id="shortName"
+              id="href"
               onInputHandler={onInputHandler}
               lable="لینک"
               validations={[requiredValidator(), minValidator(3)]}
@@ -76,17 +145,21 @@ function Menus(props) {
                 منوی اصلی
               </label>
               <select
-                id="countries"
+                onChange={(e) => setMenuParent(e.target.value)}
                 class="bg-gray-50 border-2 border-gray-300  text-gray-900 text-sm rounded-lg focus:ring-orange-300 focus:border-orange-300 block w-full p-2.5 dark:bg-zinc-700 dark:border-orange-200 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-orange-300"
               >
-                <option selected>Choose a country</option>
-                <option value="US">United States</option>
-                <option value="CA">Canada</option>
-                <option value="FR">France</option>
-                <option value="DE">Germany</option>
+                <option value="-1" selected>
+                  دسته بندی مورد نظر را انتخاب کنید
+                </option>
+                {menus.map((menu) => (
+                  <option value={menu._id}>{menu.title}</option>
+                ))}
               </select>
             </div>
-            <Button className="bg-zinc-600 text-orange-200  rounded-2xl border-2 p-2 px-4 text-center text-sm transition-all hover:bg-transparent hover:border-orange-300 dark:hover:border-orange-300 hover:text-orange-300 dark:bg-transparent dark:border-orange-200   font-Dana">
+            <Button
+              onClick={(e) => createMenu(e)}
+              className="bg-zinc-600 text-orange-200  rounded-2xl border-2 p-2 px-4 text-center text-sm transition-all hover:bg-transparent hover:border-orange-300 dark:hover:border-orange-300 hover:text-orange-300 dark:bg-transparent dark:border-orange-200   font-Dana"
+            >
               افزودن
             </Button>
           </div>
@@ -97,26 +170,25 @@ function Menus(props) {
           لیست منو ها
         </p>
         <Table th={["ردیف", "عنوان", "مقصد", "فرزند", "کنترل"]}>
-          <tr>
-            <td>امیررضا</td>
-            <td>imamirdh</td>
-            <td></td>
-            <td></td>
-            <td>
-              <Button className="group relative border-2 border-zinc-400 p-2 rounded-md hover:border-rose-500 transition-all">
-                <HiOutlineTrash className="text-zinc-500 text-lg hover:text-orange-300 group-hover:text-rose-500 dark:text-zinc-300" />
-                <span className="absolute -top-full -right-full hidden bg-white p-1 text-sm rounded-lg border border-zinc-500 group-hover:block dark:bg-zinc-700 ">
-                  حذف
-                </span>
-              </Button>
-              <Button className="group relative border-2 border-zinc-400 p-2 rounded-md hover:border-yellow-500 transition-all">
-                <HiOutlinePencil className="text-zinc-500 text-lg hover:text-orange-300 group-hover:text-yellow-500 dark:text-zinc-300" />
-                <span className="absolute -top-full -right-full hidden bg-white p-1 text-sm rounded-lg border border-zinc-500 group-hover:block dark:bg-zinc-700 ">
-                  ویرایش
-                </span>
-              </Button>
-            </td>
-          </tr>
+          {menus.map((menu, index) => (
+            <tr>
+              <td>{index + 1}</td>
+              <td>{menu.title}</td>
+              <td>{menu.href}</td>
+              <td>{menu.parent ? menu.parent.title : ""}</td>
+              <td>
+                <Button
+                  onClick={() => removeMenu(menu._id)}
+                  className="group relative border-2 border-zinc-400 p-2 rounded-md hover:border-rose-500 transition-all"
+                >
+                  <HiOutlineTrash className="text-zinc-500 text-lg hover:text-orange-300 group-hover:text-rose-500 dark:text-zinc-300" />
+                  <span className="absolute -top-full -right-full hidden bg-white p-1 text-sm rounded-lg border border-zinc-500 group-hover:block dark:bg-zinc-700 ">
+                    حذف
+                  </span>
+                </Button>
+              </td>
+            </tr>
+          ))}
         </Table>
       </div>
     </>
