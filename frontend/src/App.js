@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 function App() {
   const [isDark, setIsDark] = useState(false);
   const [sidebarMobile, setSidebarMobile] = useState(false);
+  const [menuBarMobile, setMenuBarMobile] = useState(false);
   const [shopCartMenuMobile, setShopCartMenuMobile] = useState(false);
   const Routes = useRoutes(routes);
 
@@ -74,6 +75,8 @@ function App() {
         value={{
           isDark,
           setIsDark,
+          menuBarMobile,
+          setMenuBarMobile,
           sidebarMobile,
           setSidebarMobile,
           shopCartMenuMobile,

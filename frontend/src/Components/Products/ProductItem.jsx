@@ -13,7 +13,7 @@ function ProductItem({
   shortName,
 }) {
   return (
-    <div className="lg:w-[300px] lg:h-[467px] w-[1/2] h-[273px] bg-white dark:bg-zinc-700 shadow-sm p-2 rounded-2xl ">
+    <div className=" bg-white dark:bg-zinc-700 shadow-sm p-5 rounded-2xl ">
       {count > 0 && discount && (
         <div className="bg-orange-300 text-[12px] lg:text-base text-white dark:text-zinc-700 absolute px-[14px] py-1 rounded-[100px] font-medium">
           {discount}%

@@ -73,4 +73,12 @@
 button.swal2-styled {
   font-family: 'Dana' !important;
 }
+.productinfodesc ul{
+  list-style-type: circle;
+  font-size: medium;
+} 
+.productinfodesc p{
+  font-size: small;
+  color: rgb(250, 65, 65);
+} 
 }
