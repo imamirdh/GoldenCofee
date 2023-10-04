@@ -1,8 +1,8 @@
 <h1 align=center >
-  Persian Rtl Cms
+  Golden Coffe
 </h1>
 
-Welcome to the `Persian site management dashboard` project. I am `Amirreza Dehnamaki`, the programmer and designer of this project, and I tried to prepare an efficient site management dashboard. Stay with me to learn more about this project...
+
 
 ![Static Badge](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![reactbadge](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
@@ -11,8 +11,26 @@ Welcome to the `Persian site management dashboard` project. I am `Amirreza Dehna
 ![reactbadge](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 
 ## 💻 Project View
+<img  src="http://linklick.ir/a/l/0bad39cf8be01afd807cc6512ae89bd2/pcofe1.png"/>
+<table>
+  <tr>
+    <td valign="top"><img  src="http://linklick.ir/a/l/0bad39cf8be01afd807cc6512ae89bd2/pcofe2.png"/></td>
+    <td valign="top"><img  src="http://linklick.ir/a/l/0bad39cf8be01afd807cc6512ae89bd2/pcofe2dark.png"/></td>
+  </tr>
+  <tr>
+    <td valign="top"><img  src="http://linklick.ir/a/l/0bad39cf8be01afd807cc6512ae89bd2/pcofe3dark.png"/></td>
+    <td valign="top"><img  src="http://linklick.ir/a/l/0bad39cf8be01afd807cc6512ae89bd2/pcofe4dark.png"/></td>
+  </tr>
+  <tr>
+    <td valign="top"><img  src="http://linklick.ir/a/l/0bad39cf8be01afd807cc6512ae89bd2/pcofe5.png"/></td>
+    <td valign="top"><img  src="http://linklick.ir/a/l/0bad39cf8be01afd807cc6512ae89bd2/pcofe5dark.png"/></td>
+  </tr>
+  <tr>
+    <td valign="top"><img  src="http://linklick.ir/a/l/0bad39cf8be01afd807cc6512ae89bd2/pcofe6.png"/></td>
+    <td valign="top"><img  src="http://linklick.ir/a/l/0bad39cf8be01afd807cc6512ae89bd2/pcofe6dark.png"/></td>
+  </tr>
+</table>
 
-![App Screenshot](https://linklick.ir/a/l/0bad39cf8be01afd807cc6512ae89bd2/%D9%BE%D9%86%D9%84-%D8%A7%D8%AF%D9%85%DB%8C%D9%86-Google-Chrome-1402-07-01-12-38-30-_online-video-cutter.com_.gif)
 
 ## 🚀 About Me
 
